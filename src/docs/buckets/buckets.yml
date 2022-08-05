@@ -1,0 +1,15 @@
+GET Loads BucketLists | POST Adds New  Bucket
+---
+tags:
+  - BucketLists
+parameters:
+  - in: header
+    name: Authentication Token
+    required: true
+
+responses:
+  200:
+    description: Displays Bucket items
+
+  404:
+    description: Record was not found

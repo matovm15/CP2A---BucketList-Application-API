@@ -11,6 +11,7 @@ buckets = Blueprint("buckets", __name__, url_prefix="/api/v1/buckets")
 
 @buckets.route('/', methods=['POST', 'GET'])
 @jwt_required()
+@swag_from('./docs/buckets/buckets.yml')
 def handle_buckets():
     current_user = get_jwt_identity()
 
@@ -19,10 +20,10 @@ def handle_buckets():
         bucket_name = request.get_json().get('bucket_name', '')
 
         # This Bucket item already exists don't add it again
-        if Bucket.query.filter_by(bucket_name=bucket_name).first():
-            return jsonify({
-                'error': 'Bucket name already exists'
-            }), HTTP_409_CONFLICT
+        # if Bucket.query.filter_by(bucket_name=bucket_name).first():
+        #     return jsonify({
+        #         'error': 'Bucket name already exists'
+        #     }), HTTP_409_CONFLICT
 
         bucket = Bucket(bucket_name=bucket_name, user_id=current_user)
         db.session.add(bucket)
@@ -72,6 +73,7 @@ def handle_buckets():
 '''Retrieving a single item'''
 @buckets.get("/<int:id>")
 @jwt_required()
+@swag_from('./docs/buckets/single_bucket.yml')
 def get_bucket(id):
     user_id = get_jwt_identity()
 
@@ -80,6 +82,7 @@ def get_bucket(id):
     # if we can't get the item
     if not bucket:
         return jsonify({'message': 'Item not found'}), HTTP_404_NOT_FOUND
+
 
     return jsonify({
         'bucket_id': bucket.id,
@@ -94,23 +97,19 @@ def get_bucket(id):
 @buckets.put('/<int:id>')
 @buckets.patch('/<int:id>')
 @jwt_required()
+@swag_from('./docs/buckets/update_bucket.yml')
 def update_buckets(id):
-    user_id = get_jwt_identity()
+    current_user = get_jwt_identity()
     # check if it exists
-    bucket = Bucket.query.filter_by(user_id=user_id, id=id).first()
+    bucket = Bucket.query.filter_by(user_id=current_user, id=id).first()
 
     if not bucket:
         return jsonify({'message': 'Item not found'}), HTTP_404_NOT_FOUND
 
+
     bucket_name = request.get_json().get('bucket_name', '')
 
-    if not validators.bucket_name(bucket_name):
-        return jsonify({
-            'error': 'Enter a valid bucket_name'
-        }), HTTP_400_BAD_REQUEST
-
     bucket.bucket_name = bucket_name
-  
 
     db.session.commit()
  
@@ -122,9 +121,12 @@ def update_buckets(id):
         'date_modified': bucket.date_modified
     }), HTTP_200_OK
 
-''' Delete Bucket Items'''
+
+
+''' Delete Bucket Item'''
 @buckets.delete("/<int:id>")
 @jwt_required()
+@swag_from('./docs/buckets/delete_bucket.yml')
 def delete_bucket(id):
     user_id = get_jwt_identity() # confirm if it's the user who created it
 

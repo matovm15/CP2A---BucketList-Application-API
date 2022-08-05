@@ -1,0 +1,16 @@
+Update Single Bucket List
+---
+tags:
+  - BucketLists
+parameters:
+  - in: header
+    name: Authentication Token
+    required: true
+
+responses:
+  200:
+    description: BucketList Updated Succesfully
+  400:
+    description: Bucket Name Not Valid
+  404:
+    description: Bucket was not found

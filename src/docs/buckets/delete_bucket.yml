@@ -1,0 +1,15 @@
+Delete Bucket Item
+---
+tags:
+  - BucketLists
+parameters:
+  - in: header
+    name: Authentication Token
+    required: true
+
+responses:
+  204:
+    description: Item Deleted
+
+  404:
+    description: Item to Delete was not found

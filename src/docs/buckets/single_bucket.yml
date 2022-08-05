@@ -1,0 +1,15 @@
+GET Single Bucket List
+---
+tags:
+  - BucketLists
+parameters:
+  - in: header
+    name: Authentication Token
+    required: true
+
+responses:
+  200:
+    description: Displays Single Bucket Item
+
+  404:
+    description: Bucket was not found
