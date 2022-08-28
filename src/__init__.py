@@ -7,6 +7,9 @@ from src.database import db, Bucket
 from flask_jwt_extended import JWTManager
 from flasgger import Swagger, swag_from
 from src.config.swagger import template, swagger_config
+from flask_migrate import Migrate
+
+
 
 
 def create_app(test_config=None):
@@ -15,7 +18,7 @@ def create_app(test_config=None):
     if test_config is None:
         app.config.from_mapping(
             SECRET_KEY=os.environ.get('SECRET_KEY'),
-            SQLALCHEMY_DATABASE_URI=os.environ.get("SQLALCHEMY_DB_URI"),
+            SQLALCHEMY_DATABASE_URI = "postgresql://postgres:postgres@localhost/db",
             SQLALCHEMY_TRACK_MODIFICATIONS=False,
             JWT_SECRET_KEY=os.environ.get('JWT_SECRET_KEY'),
             SWAGGER={
@@ -28,7 +31,7 @@ def create_app(test_config=None):
 
     db.app = app
     db.init_app(app)
-
+    migrate = Migrate(app,db)
     JWTManager(app)
 
     app.register_blueprint(auth)
@@ -36,12 +39,13 @@ def create_app(test_config=None):
     Swagger(app, config=swagger_config, template=template)
 
 
-    # @app.errorhandler(HTTP_404_NOT_FOUND)
-    # def handler_404(e):
-    #     return jsonify({'error': 'Not found'}), HTTP_404_NOT_FOUND
+    @app.errorhandler(HTTP_404_NOT_FOUND)
+    def handler_404(e):
+        return jsonify({'error': 'Not found'}), HTTP_404_NOT_FOUND
 
-    # @app.errorhandler(HTTP_500_INTERNAL_SERVER_ERROR)
-    # def handler_500(e):
-    #     return jsonify({'error': 'Something went wrong, we are working on it'}), HTTP_500_INTERNAL_SERVER_ERROR
-
+    @app.errorhandler(HTTP_500_INTERNAL_SERVER_ERROR)
+    def handler_500(e):
+        return jsonify({'error': 'Something went wrong, we are working on it'}), HTTP_500_INTERNAL_SERVER_ERROR
     return app
+
+

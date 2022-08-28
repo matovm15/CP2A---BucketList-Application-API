@@ -1,4 +1,4 @@
-GET a Single Bucket List
+Get a Single Bucketlist
 ---
 tags:
   - BucketLists
@@ -13,7 +13,7 @@ parameters:
 
 responses:
   200:
-    description: Displays Single Bucket Item
+    description: Displays BucketLists
 
   404:
-    description: Bucket was not found
+    description: BucketLists not found
