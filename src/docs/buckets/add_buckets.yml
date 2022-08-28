@@ -1,4 +1,4 @@
-Get All Bucketlists
+Adds New Bucketlist
 ---
 tags:
   - BucketLists
@@ -10,7 +10,7 @@ parameters:
 
 responses:
   200:
-    description: Displays BucketLists
+    description: Added BucketLists
 
   404:
     description: BucketLists not found

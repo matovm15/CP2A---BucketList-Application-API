@@ -1,19 +1,20 @@
-GET a Single Bucket List
+Creates a new Bucketlist Item
 ---
 tags:
-  - BucketLists
+  - BucketLists Item
+
 parameters:
   - in: header
     name: Authentication Token
     required: true
 
-  - in: path
-    name: bucket_id
-    required: true
+
+
 
 responses:
   200:
-    description: Displays Single Bucket Item
-
+    description: BucketList Updated Succesfully
+  400:
+    description: Bucket Name Not Valid
   404:
     description: Bucket was not found

@@ -1,22 +1,22 @@
-Update Single Bucket List
+Updates
+
 ---
 tags:
-  - BucketLists
+  - BucketLists Item
 parameters:
   - in: header
     name: Authentication Token
     required: true
-    
+
   - in: path
     name: bucket_id
     required: true
 
 
-
 responses:
   200:
-    description: BucketList Updated Succesfully
+    description: Bucket Item Updated Succesfully
   400:
-    description: Bucket Name Not Valid
+    description: Bucket Item Name Not Valid
   404:
-    description: Bucket was not found
+    description: Bucket Item was not found

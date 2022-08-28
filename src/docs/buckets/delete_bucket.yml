@@ -7,6 +7,10 @@ parameters:
     name: Authentication Token
     required: true
 
+  - in: path
+    name: bucket_id
+    required: true
+
 responses:
   204:
     description: Item Deleted

@@ -61,8 +61,8 @@ def login():
     if user:
         is_pass_correct = check_password_hash(user.password, password)
         if is_pass_correct:
-            refresh_token = create_refresh_token(identity=user.id)
-            access_token = create_access_token(identity=user.id)
+            refresh_token = create_refresh_token(identity=user.user_id)
+            access_token = create_access_token(identity=user.user_id)
             return jsonify({
                 'user': {
                     'username': user.username,
