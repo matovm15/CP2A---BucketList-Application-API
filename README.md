@@ -4,12 +4,12 @@
 
 Create a virtualenv
 ```shell
-$virtualenv bucket-env
+$virtualenv venv
 ```
 
 Activate the environment
 ```shell
-$source bucket-env/bin/activate
+$source venv/bin/activate
 ```
 Install dependencies
 ```shell
